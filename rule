@@ -5,4 +5,5 @@ digit代表着位数。
 
 turn代表总体循环次数，
 如果有多层循环，则在turn后加上数字。
-turn_co代表已运行次数，turn_ra代表最大次数
+co_turn代表已运行次数，Ra_turn代表最大次数
+turn首字母t小写代表
