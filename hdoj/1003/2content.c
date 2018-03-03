@@ -14,7 +14,7 @@ struct Context{
 	struct Block *head;
 };
 
-void creat_Block(struct Context *context,struct Block *this){
+struct Block* creat_Block(struct Context *context,struct Block *this){
 	struct Block *next;
 	next=(struct Block*)calloc(1,sizeof(struct Block));
 	next->Begin=this->End+1;
@@ -23,6 +23,7 @@ void creat_Block(struct Context *context,struct Block *this){
 	next->pre =this;
 	next->next=NULL;
 	next->sum =context->line[next->Begin];
+	return next;
 }
 
 void init_con(struct Context *con){
@@ -45,9 +46,7 @@ void link_Block(struct Context *con){
 	head->End  =1;
 	head->sum  =con->line[0];
 	head->pre  =NULL;
-	;;printf("Block begin , its sum is %d \n",head->sum);
-	;;printf("P1:%p\tP2:%p\n",con->head,head);
-	;;printf("Block begin , its sum is %d \n",con->head->sum);
+	while(
 	creat_Block(con,head);
 }
 
@@ -55,8 +54,10 @@ void display_link(struct Context *context){
 	struct Block *block;
 	int count=0;
 	block=context->head;
-	while(block->next!=NULL){
+	while(1){
 		printf("%d:\tThis block begin at %d , end at %d\n",++count,block->Begin,block->End);
+		if(block->next==NULL){break;}
+		else{block=block->next;}
 	}
 }
 		
@@ -71,8 +72,8 @@ void test(){
 	struct Context context;
 	init_con(&context);	
 	link_Block(&context);
-	printf("%d\n",context.head->sum);
-
+	display_link(&context);
+	
 
 }
 
