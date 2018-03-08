@@ -95,6 +95,7 @@ void merge_block(struct Context *context,struct Block* block){
 	block->next=next->next;
 	block->End=next->End;
 	block->sum+=next->sum;
+	block->next->pre=block;
 }
 
 //void merge(struct Context *context){
@@ -121,11 +122,12 @@ void merge_block(struct Context *context,struct Block* block){
 //}
 
 int block_detect(struct Block* block){
-	if(block->next=NULL){return -1;}
+	if(block->pre!=NULL&&block->next!=NULL){printf("%d\t%d\t%d\n",block->pre->sum,block->sum,block->next->sum);}
+	if(block->next==NULL){return -1;}
 	else if(block->sum*block->next->sum>=0){return 1;}
 	else if(block->pre==NULL){return 3;}
-	else if((block->next->sum+block->sum)*block->sum<0 &&
-			(block->pre ->sum+block->sum)*block->sum<0)
+	else if(((block->next->sum+block->sum)*block->sum<=0) &&
+			((block->pre ->sum+block->sum)*block->sum<=0))
 			{return 2;}
 	return 0;
 }
@@ -134,6 +136,8 @@ void merge(struct Context *context){
 	struct Block *cursor=context->head;
 	int loop=1;
 	while (loop){
+		display_con(context);	
+		printf("Block begin at %d , signal is %d\n",cursor->Begin,block_detect(cursor));
 		switch (block_detect(cursor)){
 			case -1:
 				loop=0;
