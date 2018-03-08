@@ -38,6 +38,14 @@ void init_con(struct Context *con){
 	con->head=NULL;
 }
 
+void compare_biggest(struct Context *con,struct Block *block){
+	if(block->sum > con->sum){
+		con->Begin=block->Begin;
+		con->End=block->End;
+		con->sum=block->sum;
+	}
+}
+
 void link_Block(struct Context *con){
 	struct Block *temp;
 	temp=(struct Block*)calloc(1,sizeof(struct Block));
@@ -49,6 +57,16 @@ void link_Block(struct Context *con){
 	while(temp->End<con->Length){
 		temp=creat_Block(con,temp);
 	}
+}
+
+void link_free(struct Block *block){
+	while(block->next!=NULL){
+		block=block->next;
+		printf("释放了block： Begin at %d, End at %d, sum is %d",block->Begin,block->End,block->sum); 
+		free(block->pre);
+	}
+	printf("释放了block： Begin at %d, End at %d, sum is %d",block->Begin,block->End,block->sum); 
+	free(block);
 }
 
 void display_link(struct Context *context){
@@ -79,10 +97,72 @@ void merge_block(struct Context *context,struct Block* block){
 	block->sum+=next->sum;
 }
 
-struct Block* merge(){;}
+//void merge(struct Context *context){
+//	struct Block *cursor=context->head;
+//	while(cursor->next!=NULL){
+//		if(cursor->sum*cursor->next->sum>=0){
+//			merge_block(context,cursor);
+//			cursor=(cursor->pre!=NULL?cursor->pre:cursor);
+//			continue;
+//		}else if(cursor->pre!=NULL){if(cursor->pre->sum*cursor->pre->sum>0){
+//			if((cursor->sum>0&&cursor->pre->sum+cursor->next->sum+cursor->sum<0)
+//			|| (cursor->sum<0&&cursor->pre->sum+cursor->sum>0&&cursor->next->sum+cursor->sum>0)){
+//				merge_block(context,cursor);
+//				cursor=cursor->pre;
+//				merge_block(context,cursor);
+//				if(cursor->pre!=NULL){
+//					cursor=cursor->pre;
+//				}
+//				continue;
+//			}
+//		}}
+//		cursor=cursor->next;
+//	}
+//}
+
+int block_detect(struct Block* block){
+	if(block->next=NULL){return -1;}
+	else if(block->sum*block->next->sum>=0){return 1;}
+	else if(block->pre==NULL){return 3;}
+	else if((block->next->sum+block->sum)*block->sum<0 &&
+			(block->pre ->sum+block->sum)*block->sum<0)
+			{return 2;}
+	return 0;
+}
+
+void merge(struct Context *context){
+	struct Block *cursor=context->head;
+	int loop=1;
+	while (loop){
+		switch (block_detect(cursor)){
+			case -1:
+				loop=0;
+				break;
+			case 1:
+				merge_block(context,cursor);
+				if(cursor->pre!=NULL){cursor=cursor->pre;}
+				break;
+			case 2:
+				merge_block(context,cursor);
+				cursor=cursor->pre;
+				merge_block(context,cursor);
+				if(cursor->pre!=NULL){cursor=cursor->pre;}
+				break;
+			default:
+				cursor=cursor->next;
+		}
+	}
+}
+
+	
 
 void test();
 int main(){
+	//int cu_turn1,Ra_turn1;
+	//scanf("%d",&Ra_turn1);
+	//for(cu_turn1=0;cu_turn1<Ra_turn1;cu_turn1++){
+	//	
+	//}
 	test();
 	return 0;
 }
@@ -92,12 +172,9 @@ void test(){
 	init_con(&context);	
 	link_Block(&context);
 	display_con(&context);
-	merge_block(&context,context.head);
-	merge_block(&context,context.head);
-	merge_block(&context,context.head);
-	merge_block(&context,context.head);
+	merge(&context);
 	display_con(&context);
-
+	//link_free(context.head);
 }
 
 
