@@ -62,10 +62,8 @@ void link_Block(struct Context *con){
 void link_free(struct Block *block){
 	while(block->next!=NULL){
 		block=block->next;
-		printf("释放了block： Begin at %d, End at %d, sum is %d",block->Begin,block->End,block->sum); 
 		free(block->pre);
 	}
-	printf("释放了block： Begin at %d, End at %d, sum is %d",block->Begin,block->End,block->sum); 
 	free(block);
 }
 
@@ -98,31 +96,7 @@ void merge_block(struct Context *context,struct Block* block){
 	block->next->pre=block;
 }
 
-//void merge(struct Context *context){
-//	struct Block *cursor=context->head;
-//	while(cursor->next!=NULL){
-//		if(cursor->sum*cursor->next->sum>=0){
-//			merge_block(context,cursor);
-//			cursor=(cursor->pre!=NULL?cursor->pre:cursor);
-//			continue;
-//		}else if(cursor->pre!=NULL){if(cursor->pre->sum*cursor->pre->sum>0){
-//			if((cursor->sum>0&&cursor->pre->sum+cursor->next->sum+cursor->sum<0)
-//			|| (cursor->sum<0&&cursor->pre->sum+cursor->sum>0&&cursor->next->sum+cursor->sum>0)){
-//				merge_block(context,cursor);
-//				cursor=cursor->pre;
-//				merge_block(context,cursor);
-//				if(cursor->pre!=NULL){
-//					cursor=cursor->pre;
-//				}
-//				continue;
-//			}
-//		}}
-//		cursor=cursor->next;
-//	}
-//}
-
 int block_detect(struct Block* block){
-	if(block->pre!=NULL&&block->next!=NULL){printf("%d\t%d\t%d\n",block->pre->sum,block->sum,block->next->sum);}
 	if(block->next==NULL){return -1;}
 	else if(block->sum*block->next->sum>=0){return 1;}
 	else if(block->pre==NULL){return 3;}
@@ -136,8 +110,7 @@ void merge(struct Context *context){
 	struct Block *cursor=context->head;
 	int loop=1;
 	while (loop){
-		display_con(context);	
-		printf("Block begin at %d , signal is %d\n",cursor->Begin,block_detect(cursor));
+		compare_biggest(context,cursor);
 		switch (block_detect(cursor)){
 			case -1:
 				loop=0;
@@ -158,28 +131,26 @@ void merge(struct Context *context){
 	}
 }
 
+void display_result(struct Context* context){
+	printf("%d %d %d\n",context->sum,context->Begin,context->End);
+}
 	
 
 void test();
 int main(){
-	//int cu_turn1,Ra_turn1;
-	//scanf("%d",&Ra_turn1);
-	//for(cu_turn1=0;cu_turn1<Ra_turn1;cu_turn1++){
-	//	
-	//}
-	test();
+	int cu_turn1,Ra_turn1;
+	scanf("%d",&Ra_turn1);
+	for(cu_turn1=0;cu_turn1<Ra_turn1;cu_turn1++){
+		struct Context context;
+		init_con(&context);
+		link_Block(&context);
+		merge(&context);
+		display_result(&context);
+		link_free(context.head);
+	}
 	return 0;
 }
 
-void test(){
-	struct Context context;
-	init_con(&context);	
-	link_Block(&context);
-	display_con(&context);
-	merge(&context);
-	display_con(&context);
-	//link_free(context.head);
-}
 
 
 
