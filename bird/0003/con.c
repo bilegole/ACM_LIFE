@@ -1,27 +1,28 @@
 #include<stdio.h>
-#define isTest 1
+#include<math.h>
+
+int asqrt(int x){
+	int i=0;
+	while(i*i<=x){
+		i++;
+	}	return (i-1);
+}
+
+int mulx(int num,int x){
+	int reg=(int)asqrt(num+x);
+	if(reg*reg==(num+x)){return 1;}
+	else {return 0;}
+}
 
 int main(){
-	//get the frofit.
-	double profit,bonus;
-	int rank[6]={0,10,20,40,60,100};
-	double rate[6]={0.2,0.1,0.05,0.04,0.03,0.01};
-	scanf("%lf",&profit);
-	if(isTest==1){printf("My profit is %lf,",profit);} 
-	//calculate bonus
-	int co;
-	for(co=1;co<5;co++){
-		if(profit>(rank[co]-rank[co-1])){
-			bonus+=(rank[co]-rank[co-1])*rate[co];
-			profit-=(rank[co]-rank[co-1]);
-		}else{
-			bonus+=profit*rate[co];
-			profit=0;
-			break;
+	int i;
+	for(i=-1000;i<1000;i++){
+		//printf("is testing %d\n",i);
+		if(mulx(i,100)&&mulx(i,268)){
+			printf("The number is %d\n",i);
+			//break;
 		}
 	}
-	if(profit>0){bonus+=profit*rate[5];profit=0;}
-	printf("And my bouns is %lf!\n",bonus);
 	return 0;
 }
-			
+	

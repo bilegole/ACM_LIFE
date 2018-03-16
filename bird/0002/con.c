@@ -1,22 +1,27 @@
 #include<stdio.h>
-#define MAX 4
-int isDifferent(int a,int b,int c){
-	if(a!=b&&b!=c&&a!=c){return 1;}
-	return 0;
-}
+#define isTest 1
 
 int main(){
-	int co1,co2,co3,count=0;
-	for(co1=1;co1<MAX+1;co1++){
-		for(co2=1;co2<MAX+1;co2++){
-			for(co3=1;co3<MAX+1;co3++){
-		if(isDifferent(co1,co2,co3)){
-			count++;
-			printf("%d\n",co1*100+co2*10+co3);
-		}
-			}
+	//get the frofit.
+	double profit,bonus;
+	int rank[6]={0,10,20,40,60,100};
+	double rate[6]={0.2,0.1,0.05,0.04,0.03,0.01};
+	scanf("%lf",&profit);
+	if(isTest==1){printf("My profit is %lf,",profit);} 
+	//calculate bonus
+	int co;
+	for(co=1;co<5;co++){
+		if(profit>(rank[co]-rank[co-1])){
+			bonus+=(rank[co]-rank[co-1])*rate[co];
+			profit-=(rank[co]-rank[co-1]);
+		}else{
+			bonus+=profit*rate[co];
+			profit=0;
+			break;
 		}
 	}
+	if(profit>0){bonus+=profit*rate[5];profit=0;}
+	printf("And my bouns is %lf!\n",bonus);
 	return 0;
 }
 			
