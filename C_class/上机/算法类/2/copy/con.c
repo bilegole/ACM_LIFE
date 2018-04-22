@@ -229,6 +229,9 @@ void pro_start(Pro *pro){
 				}
 			}
 		}
+		int len=0;
+		for(len=Len;pro->res->con[len-1]==0;len--){}
+		pro->res->len=len;
 	}else if (pro->sig[0]==3){
 		printf("开始除法");
 	}
@@ -239,16 +242,15 @@ void test6(){
 }
 
 void test5(){
-	for(int a=0;a<1000;a++){
-	for(int b=0;b<1000;b++){
-		Pro *pro=pro_creat(0);
+//	for(int a=0;a<1000;a++){
+//	for(int b=0;b<1000;b++){
+		int a=11;int b=1100;
+		Pro *pro=pro_creat(2);
 		Num_to_pro(pro,int_to_Num(a),0);
 		Num_to_pro(pro,int_to_Num(b),1);
 		pro_start(pro);
-		if(Num_to_int(pro->res)!=a+b){
-			printf("好像错了？\n");
-		}
-	}}
+		printf("%d * %d = %s\n",a,b,Num_to_str(pro->res));
+//	}}
 }
 
 void test4(){
@@ -287,6 +289,6 @@ void test1(){
 }
 
 int main(){
-	test6();
+	test5();
 	return 0;
 }
