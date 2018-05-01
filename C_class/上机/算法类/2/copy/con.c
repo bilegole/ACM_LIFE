@@ -207,7 +207,6 @@ void pro_start(Pro *pro){
 				int len=0;
 				for(len=Len;pro->res->con[len-1]==0;len--){}
 				pro->res->len=len;
-					
 			}
 		}
 	}else if (pro->sig[0]==2){
@@ -234,8 +233,26 @@ void pro_start(Pro *pro){
 		pro->res->len=len;
 	}else if (pro->sig[0]==3){
 		printf("开始除法");
-	}
-}
+		Num *b1,*b2;
+		int mid,n;
+		b1=str_to_Num(Num_to_str(pro->nums[0]));
+		b2=str_to_Num("0");
+		for(int digit=pro->num[0].len-pro->num[1].len;digit>=0;digit--){
+			for(int dig=digit;digit<b1->len;digit--){
+				b2->con[dig]=b1->con[dig];
+				b1->con[dig]=0;
+			}
+			for(len=Len;b2[len-1]==0;len--){}
+			b2->len=len;
+			for(pro->res[0].con[dig]=0;num_compare(b2,pro->nums[1])==1;pro->res[0].con[dig]++){
+				Pro cal=pro_creat(1);
+				Num_to_pro(cal,b2,0);
+				Num_to_pro(cal,pro->nums+1,1);
+				pro_start(cal);
+			}
+		}
+	}                		
+}                     		
 
 void test6(){
 	
