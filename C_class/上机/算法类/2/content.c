@@ -1,25 +1,25 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-#define Len 1000	//¶¨Òå´ËÔËËãÌåÏµÖĞÖ§³ÖµÄ×î´ó³¤¶È 
+#define Len 1000	//å®šä¹‰æ­¤è¿ç®—ä½“ç³»ä¸­æ”¯æŒçš„æœ€å¤§é•¿åº¦ 
 
-//´ËÔËËãÌåÏµÖĞÓÃÓÚ´æ´¢Êı×ÖµÄ¶ÔÏó¡£ 
+//æ­¤è¿ç®—ä½“ç³»ä¸­ç”¨äºå­˜å‚¨æ•°å­—çš„å¯¹è±¡ã€‚ 
 struct Num{
 	int con[Len];
-	int sig;		//´ú±í´ËÊı×ÖµÄÕı¸ººÅ¡£0Îª¸º£¬1ÎªÕı 
+	int sig;		//ä»£è¡¨æ­¤æ•°å­—çš„æ­£è´Ÿå·ã€‚0ä¸ºè´Ÿï¼Œ1ä¸ºæ­£ 
 	int len; 
 };
 
-//´ËÔËËãÌåÏµÖĞÒ»´ÎÍâÏÔµÄÔËËã¹ı³Ì¡£ 
+//æ­¤è¿ç®—ä½“ç³»ä¸­ä¸€æ¬¡å¤–æ˜¾çš„è¿ç®—è¿‡ç¨‹ã€‚ 
 struct Pro{
 	struct Num nums[2];
-	int sig[2];	//0Î»´ú±íÔËËãÀàĞÍ£¬0-¼Ó		1-¼õ	2-³Ë	3-³ı 
-					//1Î»´ú±í½Ï´óµÄÊı×ÖµÄÏÂ±ê
+	int sig[2];	//0ä½ä»£è¡¨è¿ç®—ç±»å‹ï¼Œ0-åŠ 		1-å‡	2-ä¹˜	3-é™¤ 
+					//1ä½ä»£è¡¨è¾ƒå¤§çš„æ•°å­—çš„ä¸‹æ ‡
 	struct Num result; 
 }; 
 
-//´ËÔËËãÌåÏµÖĞÊäÈëÒ»¸ö³¤Êı 
-//ÊäÈë£ºÒÔ×Ö·û´®ĞÎÊ½´æ´¢µÄÒ»¸öÊı×Ö £¬¸ººÅ¼ÓÔÚ×îÇ°Ãæ¡£ 
+//æ­¤è¿ç®—ä½“ç³»ä¸­è¾“å…¥ä¸€ä¸ªé•¿æ•° 
+//è¾“å…¥ï¼šä»¥å­—ç¬¦ä¸²å½¢å¼å­˜å‚¨çš„ä¸€ä¸ªæ•°å­— ï¼Œè´Ÿå·åŠ åœ¨æœ€å‰é¢ã€‚ 
 void NumIn(char *s_num,struct *Num result){
 	struct Num *res=(struct Num *)calloc(1,sizeof(struct Num));
 	for(int digit=0;digit<Len;digit++){
@@ -34,13 +34,13 @@ void NumIn(char *s_num,struct *Num result){
 	*result=*res;
 }
 
-//ÄÚÔÚµÄÁ½Í¬ºÅÊıÏà¼ÓÔËËã 
+//å†…åœ¨çš„ä¸¤åŒå·æ•°ç›¸åŠ è¿ç®— 
 void ba_add(struct Num *num,struct Num *res){
 	for(digit=0;digit<Len;digit++){
 		res->con[digit]=0;
 	}
-	int tig=0;		//Õâ¸ö±äÁ¿ÓÃÓÚ¼ÇÂ¼½øÎ»Óë·ñ¡£ 
-	int dig=0; 		//Õâ¸ö´ú±íÕıÔÚÔËËãµÄÎ»Êı¡£ 
+	int tig=0;		//è¿™ä¸ªå˜é‡ç”¨äºè®°å½•è¿›ä½ä¸å¦ã€‚ 
+	int dig=0; 		//è¿™ä¸ªä»£è¡¨æ­£åœ¨è¿ç®—çš„ä½æ•°ã€‚ 
 	for(digit=0;digit<Len;digit++){
 		res.con[digit]=num[0].con[digit]+num[1].con[digit]+tig;
 		if(res.con[digit]>9){	
@@ -53,13 +53,13 @@ void ba_add(struct Num *num,struct Num *res){
 	res.sig=num[0].sig;
 } 
 
-//ÄÚÔÚµÄÁ½Í¬ºÅÊı´ó¼õĞ¡ÔËËã 
-void ba_dec(struct Num *num,struct Num *res){		//±£Ö¤¡¾0¡¿Ò»¶¨´óÓÚ¡¾1¡¿ 
+//å†…åœ¨çš„ä¸¤åŒå·æ•°å¤§å‡å°è¿ç®— 
+void ba_dec(struct Num *num,struct Num *res){		//ä¿è¯ã€0ã€‘ä¸€å®šå¤§äºã€1ã€‘ 
 	for(digit=0;digit<Len;digit++){
 		res->con[digit]=0;
 	}
-	int tig=0;		//ÓÃÓÚ¼ÇÂ¼²ğ½èµÄÊı¡£
-	int dig=0;		//Í¬ÉÏ¡£
+	int tig=0;		//ç”¨äºè®°å½•æ‹†å€Ÿçš„æ•°ã€‚
+	int dig=0;		//åŒä¸Šã€‚
 	for(digit=0;digit<Len;digit++){
 		res->con[digit]=num[0].con[digit]-num[1].con[digit]-tig;
 		if(res->con[digit]<0){
@@ -72,7 +72,7 @@ void ba_dec(struct Num *num,struct Num *res){		//±£Ö¤¡¾0¡¿Ò»¶¨´óÓÚ¡¾1¡¿
 	res.sig=num[0].sig;
 }
 
-//³Ë·¨ 
+//ä¹˜æ³• 
 void ba_mul(struct Num *num,struct Num *res){
 	for(digit=0;digit<Len;digit++){
 		res->con[digit]=0;
@@ -81,7 +81,7 @@ void ba_mul(struct Num *num,struct Num *res){
 	for(co1=0;co1<num[0].len;co1++){
 		for(co2=0;co2<num[1].len;co2++){
 			n=num[0].con[co1]*num[1].con[co2];
-			n1=n/10,n2=n%10;	//n1´ú±í¸ßÎ»£¬n2´ú±íµÍÎ»
+			n1=n/10,n2=n%10;	//n1ä»£è¡¨é«˜ä½ï¼Œn2ä»£è¡¨ä½ä½
 			res.con[co1+co2]+=n2;
 			res.con[co1+co2+1]+=n1; 
 		}
@@ -89,7 +89,7 @@ void ba_mul(struct Num *num,struct Num *res){
 	res.sig=num[0].sig==num[1].sig; 
 }
 
-//³ı·¨ 
+//é™¤æ³• 
 void ba_div(struct Num *num,struct Num *res){
 //	for(digit=0;digit<Len;digit++){
 //		res->con[digit]=0;
@@ -103,9 +103,9 @@ void ba_div(struct Num *num,struct Num *res){
 //	}
 }
 
-//¶¨ÒåÁËÒ»´ÎÍâÏÔµÄÔËËã£¬	pro			ÍâÏÔÔËËãµÄ´¢´æÎ»ÖÃ
-//							num1£¬num2	²ÎÓëÔËËãµÄÁ½¸öÊı×Ö
-//							type		ÍâÏßÔËËãµÄÖÖÀà	0-¼Ó	1-¼õ	2-³Ë	3-³ı 
+//å®šä¹‰äº†ä¸€æ¬¡å¤–æ˜¾çš„è¿ç®—ï¼Œ	pro			å¤–æ˜¾è¿ç®—çš„å‚¨å­˜ä½ç½®
+//							num1ï¼Œnum2	å‚ä¸è¿ç®—çš„ä¸¤ä¸ªæ•°å­—
+//							type		å¤–çº¿è¿ç®—çš„ç§ç±»	0-åŠ 	1-å‡	2-ä¹˜	3-é™¤ 
 void pro_init(struct Pro *pro,struct Num num1,struct Num num2,int type){		 
 	pro->nums[0]=num1;
 	pro->nums[1]=num2;
@@ -122,10 +122,10 @@ void pro_init(struct Pro *pro,struct Num num1,struct Num num2,int type){
 		}
 		
 	} 
-	switch (type)	//¿ªÊ¼ÔËËã 
+	switch (type)	//å¼€å§‹è¿ç®— 
 	{
 		if(type<2){
-			if(type*(pro->nums[0].sig==pro->nums[1].sig)){
+			if(type!=(pro->nums[0].sig==pro->nums[1].sig)){
 				struct Num numin[2]={pro->nums[0],pro->nums[1]};
 				ba_add(numin,pro->result);
 			}else{
