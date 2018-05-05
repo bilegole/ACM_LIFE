@@ -242,6 +242,8 @@ void pro_start(Pro *pro){
 				b2->con[dig]=b1->con[dig];
 				b1->con[dig]=0;
 			}
+			for(len=Len;b1[len-1]==0;len--){}
+			b1->len=len;
 			for(len=Len;b2[len-1]==0;len--){}
 			b2->len=len;
 			for(pro->res[0].con[dig]=0;num_compare(b2,pro->nums[1])==1;pro->res[0].con[dig]++){
@@ -250,6 +252,8 @@ void pro_start(Pro *pro){
 				Num_to_pro(cal,pro->nums+1,1);
 				pro_start(cal);
 			}
+			for(int dig=digit;digit<b1->len;digit--){
+			
 		}
 	}                		
 }                     		
