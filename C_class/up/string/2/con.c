@@ -7,6 +7,8 @@ void strcpy(char *in,char *out){
 int strcmp(char *one,char *two){
 	int tig1=1,tig2=1;
 	for(int i=0;tig1||tig2;i++){
+        if(one[i+1]=='\0'){tig1=0;}
+        if(two[i+1]=='\0'){tig2=0;}
 		if(one[i]>two[i]){
 			return 1;
 		}else if(two[i]>one[i]){

@@ -231,31 +231,30 @@ void pro_start(Pro *pro){
 		int len=0;
 		for(len=Len;pro->res->con[len-1]==0;len--){}
 		pro->res->len=len;
-	}else if (pro->sig[0]==3){
-		printf("开始除法");
-		Num *b1,*b2;
-		int mid,n;
-		b1=str_to_Num(Num_to_str(pro->nums[0]));
-		b2=str_to_Num("0");
-		for(int digit=pro->num[0].len-pro->num[1].len;digit>=0;digit--){
-			for(int dig=digit;digit<b1->len;digit--){
-				b2->con[dig]=b1->con[dig];
-				b1->con[dig]=0;
-			}
-			for(len=Len;b1[len-1]==0;len--){}
-			b1->len=len;
-			for(len=Len;b2[len-1]==0;len--){}
-			b2->len=len;
-			for(pro->res[0].con[dig]=0;num_compare(b2,pro->nums[1])==1;pro->res[0].con[dig]++){
-				Pro cal=pro_creat(1);
-				Num_to_pro(cal,b2,0);
-				Num_to_pro(cal,pro->nums+1,1);
-				pro_start(cal);
-			}
-			for(int dig=digit;digit<b1->len;digit--){
-			
-		}
-	}                		
+	}//else if (pro->sig[0]==3){
+	//	printf("开始除法");
+	//	Num *b1,*b2;
+	//	int mid,n;
+	//	b1=str_to_Num(Num_to_str(pro->nums[0]));
+	//	b2=str_to_Num("0");
+	//	for(int digit=pro->num[0].len-pro->num[1].len;digit>=0;digit--){
+	//		for(int dig=digit;digit<b1->len;digit--){
+	//			b2->con[dig]=b1->con[dig];
+	//			b1->con[dig]=0;
+	//		}
+	//		for(len=Len;b1[len-1]==0;len--){}
+	//		b1->len=len;
+	//		for(len=Len;b2[len-1]==0;len--){}
+	//		b2->len=len;
+	//		for(pro->res[0].con[dig]=0;num_compare(b2,pro->nums[1])==1;pro->res[0].con[dig]++){
+	//			Pro cal=pro_creat(1);
+	//			Num_to_pro(cal,b2,0);
+	//			Num_to_pro(cal,pro->nums+1,1);
+	//			pro_start(cal);
+	//		}
+	//		for(int dig=digit;digit<b1->len;digit--){
+	//		
+	                		
 }                     		
 
 void test6(){
@@ -265,12 +264,12 @@ void test6(){
 void test5(){
 //	for(int a=0;a<1000;a++){
 //	for(int b=0;b<1000;b++){
-		int a=11;int b=1100;
+		char a[100]="1111111111111111111111111111111111",b[100]="12";
 		Pro *pro=pro_creat(2);
-		Num_to_pro(pro,int_to_Num(a),0);
-		Num_to_pro(pro,int_to_Num(b),1);
+		Num_to_pro(pro,str_to_Num(a),0);
+		Num_to_pro(pro,str_to_Num(b),1);
 		pro_start(pro);
-		printf("%d * %d = %s\n",a,b,Num_to_str(pro->res));
+		printf("%s * %s = %s\n",a,b,Num_to_str(pro->res));
 //	}}
 }
 

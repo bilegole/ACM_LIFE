@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#define isTest 0
+#define isTest 1
 struct para_cal{
 	char *con;
 	int cen[128],words[26];
@@ -29,7 +29,7 @@ int char_cen(struct para_cal *para){
 		para->cen[para->con[digit]]++;
 	}
 	for(int i=0;i<26;i++){
-		para->words[i]=para->cen[64+i]+para->cen[97+i];
+		para->words[i]=para->cen[65+i]+para->cen[97+i];
 	}
 	return 0;
 }
@@ -80,20 +80,22 @@ char *search_replace(char *para,char *sea,char *tar){
 				the[dig]=sto[digit+len2+dig];
 			}	if(isTest==1){print_word(the,len1-digit-len2);}
 
-			res=(char*)calloc(len1+len3-len2+1,sizeof(char));
-			for(int i=0;i<len1+len3-len2+1;i++){
-				if(i<digit){
-					res[i]=sto[i];
-				}else if(i<digit+len3){
-					res[i]=tar[i-digit];
+            int a=digit,b=len3,c=len1-digit-len2;
+			sto=(char*)calloc(a+b+c,sizeof(char));
+			for(int i=0;i<a+b+c;i++){
+				if(i<a){
+					sto[i]=one[i];
+				}else if(i<a+b){
+					sto[i]=two[i-digit];
 				}else {
-					res[i]=the[i-len3-digit];
+			        sto[i]=the[i-len3-digit];
 				}
-			}	res[len1+len3-len2]='\0';
-			if(isTest){printf("%s\n",res);}
+			}	sto[a+b+c]='\0';
+            len1=a+b+c;
+			if(1){printf("11%s\n",sto);}
 		}
 	}
-	return res;
+	return sto;
 }
 
 void file_save(char *artical,char *name){
@@ -105,7 +107,8 @@ void file_save(char *artical,char *name){
 }
 
 void display1(){
-	char artical[100]="hello world!";
+	char artical[100]={0};
+    scanf("%s",artical);
 	struct para_cal *pro=init_para(artical);
 	char_cen(pro);
 	printf("word:%s\n",artical);
@@ -113,20 +116,27 @@ void display1(){
 }
 
 void display2(){
-	char artical[100]="111111222111";
-	char tore[100]="333";
-	char bere[100]="222";
+    
+	char artical[100]={0};
+	char tore[100]={0};
+	char bere[100]={0};
+    scanf("%s",artical);
+    scanf("%s",bere);
+    scanf("%s",tore);
 	printf("the sentence before:\n\"%s\"\n",artical);
 	printf("Want the \"%s\" to be replaced as \"%s\"\n",bere,tore);
 	char *res=search_replace(artical,bere,tore);
 	printf("%s\n",res);	
 	char name[10]="date.txt";
 	printf("save file as %s\n",name);
+    struct para_cal *pro=init_para(artical);
+    char_cen(pro);
+    print_words_cen(pro);
 	file_save(artical,name);
 }
 int main(){
-	printf("display1:\n");
-	display1();
+//	printf("display1:\n");
+//	display1();
 	printf("display2:\n");
 	display2();
 	return 0;

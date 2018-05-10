@@ -33,7 +33,7 @@ struct Lib *init_lib(){
 
 int init_user(struct Lib *lib){
 	for(int i=0;i<10000;i++){
-		if(lib->users[i].exist=0){
+		if(lib->users[i].exist==0){
 			lib->cursor=i;
 			lib->users[i].id=i;
 			lib->users[i].exist=1;
@@ -307,6 +307,7 @@ void lib_save(struct Lib *lib){
 				fputc(lib->users[i].address[dig],file);
 			}	fputc(10,file);
 			fputc(35,file);fputc(10,file);
+            fclose(file);
 		}
 	}
 }
@@ -327,11 +328,23 @@ void display1(){
 		}else if(cmd[0]=='4'){
 			lib_load(lib);
 		}else if(cmd[0]=='.'){
-			if(cmd[1]='c'){
-				char name[100];
-				printf("name!\n");
-				scanf("%s",name);
-				user_add_name(lib,name);
+			if(cmd[1]=='c'){
+                add_user(lib);
+//				char name[100];
+//				printf("name!\n");
+//				scanf("%s",name);
+//				user_add_name(lib,name);
+//                printf("sex!\n");
+//                int sex;
+//                scanf("%d",&sex);
+//                user_add_sex(lib,sex);
+//                printf("email\n");
+//                char email[100];
+//                scanf("%s",email);
+//                char address[100];
+//                printf("address\n");
+//                scanf("%s",address);
+//                user_add_address(lib,address);
 			}else if(cmd[1]=='s'){
 				lib_save(lib);
 			}else if(cmd[1]=='d'){
@@ -347,7 +360,9 @@ void display1(){
 				}else if(cmd[2]=='2'){
 				}else if(cmd[2]=='3'){
 				}
-			}
+			}else if(cmd[1]=='h'){
+                printf("hel[!~~~");
+            }
 		}
 	}
 }

@@ -4,7 +4,7 @@
 #define num 10
 struct MP3{
 	struct Music *musics;
-	int stat[4];//0:播放与否	1：音量		2：曲目id		3：电源
+	int stat[5];//0:播放与否	1：音量		2：曲目id		3：电源
 };
 
 struct Music{
@@ -44,13 +44,13 @@ void but(int bu,struct MP3 *mp3){	//0-开关	1-播放	2-停止	3-快进	4-快退
 			break;
 		case 3:
 			if(mp3->stat[3]==0){printf("........\n");break;}
-			mp3->stat[2]+=1;
-			printf("Next:\nTitle: %s\nDuration: %d\nArtist: %s\n",mp3->musics[mp3->stat[2]].Title,mp3->musics[mp3->stat[2]].Duration,mp3->musics[mp3->stat[2]].artist);
+            mp3->stat[4]+=10;
+			printf("Time:%d\nTitle: %s\nDuration: %d\nArtist: %s\n",mp3->stat[4],mp3->musics[mp3->stat[2]].Title,mp3->musics[mp3->stat[2]].Duration,mp3->musics[mp3->stat[2]].artist);
 			break;
 		case 4:
 			if(mp3->stat[3]==0){printf("........\n");break;}
-			mp3->stat[2]-=1;
-			printf("Last:\nTitle: %s\nDuration: %d\nArtist: %s\n",mp3->musics[mp3->stat[2]].Title,mp3->musics[mp3->stat[2]].Duration,mp3->musics[mp3->stat[2]].artist);
+            mp3->stat[4]-=10;
+			printf("Time:%d\nTitle: %s\nDuration: %d\nArtist: %s\n",mp3->stat[4],mp3->musics[mp3->stat[2]].Title,mp3->musics[mp3->stat[2]].Duration,mp3->musics[mp3->stat[2]].artist);
 			break;
 		case 5:
 			if(mp3->stat[3]==0){printf("........\n");break;}
@@ -68,12 +68,26 @@ void but(int bu,struct MP3 *mp3){	//0-开关	1-播放	2-停止	3-快进	4-快退
 	}
 }
 
+struct Music *musio(){
+    struct Music *music=(struct Music*)calloc(1,sizeof(struct Music));
+    char Name[100]="music name";
+    strcpy(music->Title,Name);
+    //music->Title="music name";
+    music->Duration=58;
+    char author[100]="yuyang";
+    strcpy(music->artist,author);
+    //music->artist="yuyang";
+        return music;
+}
+
 int main(){
 	struct MP3 *mp3=(struct MP3*)calloc(1,sizeof(struct MP3));
 	mp3->musics=(struct Music*)calloc(num,sizeof(struct Music));
 	mp3->stat[1]=50;
 	mp3->stat[0]=0;
 	mp3->stat[3]=0;
+    mp3->stat[4]=0;
+    mp3->musics=musio();
 	int cmd;
 	while(1){
 		scanf("%d",&cmd);
